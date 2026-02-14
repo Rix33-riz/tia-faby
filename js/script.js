@@ -15,15 +15,32 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     this.reset();
 });
 
-// Botões de ação
-document.querySelectorAll('.btn-primary, .btn-schedule').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const target = this.getAttribute('href') || '#contato';
-        if (target.startsWith('#')) {
-            const element = document.querySelector(target);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
+// Botões de ação - Scroll suave para seção de contato
+document.querySelectorAll('.btn-primary, .btn-schedule, .btn-secondary').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        // Se for um link, deixa o comportamento padrão
+        if (this.tagName === 'A') {
+            return;
+        }
+        
+        // Para botões, faz scroll para contato
+        e.preventDefault();
+        const contactSection = document.getElementById('contato');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+// Links de navegação - Scroll suave
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        const target = document.querySelector(href);
+        
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
         }
     });
 });
